@@ -1,17 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lo">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ຍິນດີຕ້ອນຮັບ</title>
+    <style>
+        /* ຣີເຊັດ ແລະ ຟອນທ໌ພື້ນຖານ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ກະດານຫຼັກ */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 60px 80px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ຫົວຂໍ້ */
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        /* ເສັ້ນແບ່ງ */
+        .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        /* ຂໍ້ຄວາມ */
+        p {
+            font-size: 1.3rem;
+            color: #2d3748;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* ປຸ່ມເພີ່ມຄວາມສວຍ */
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ໄອຄອນຫຼືອີໂມຈິ */
+        .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* ຕອບສະໜອງກັບຈໍມືຖື */
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>
-        Hello, World!
-    </h1>
-    <div>
-        <p>This is a simple paragraph.</p>
+    <div class="container">
+        <!-- ເພີ່ມອີໂມຈິເພື່ອຄວາມສວຍ -->
+        <span class="emoji">🚀</span>
+        <h1>Hello, World!</h1>
+        <div class="divider"></div>
+        <p>
+            ຍິນດີຕ້ອນຮັບສູ່ໂລກແຫ່ງການອອກແບບເວັບ 
+            <br>
+            <span style="font-weight: 500; color: #667eea;">This is a simple paragraph.</span>
+        </p>
+        <!-- ປຸ່ມທີ່ເຮັດວຽກຈິງ -->
+        <button class="btn" onclick="alert('ສະບາຍດີ! ເຈົ້າໄດ້ກົດປຸ່ມແລ້ວ 🙌')">
+            ກົດທີ່ນີ້
+        </button>
     </div>
-    
 </body>
 </html>
