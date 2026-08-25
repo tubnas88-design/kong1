@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ຍິນດີຕ້ອນຮັບ</title>
+    <title>ເຟສບຸກ - ຈຳລອງ</title>
     <style>
-        /* ຣີເຊັດ ແລະ ຟອນທ໌ພື້ນຖານ */
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -13,154 +13,947 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1c1e21;
+            padding-top: 56px;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: #fff;
+            border-bottom: 1px solid #d0d7de;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
         }
 
-        /* ກະດານຫຼັກ */
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 60px 80px;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            transition: transform 0.3s ease;
-            animation: fadeInUp 0.8s ease;
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .container:hover {
-            transform: translateY(-5px);
-        }
-
-        /* ຫົວຂໍ້ */
-        h1 {
-            font-size: 4rem;
+        .navbar-left .logo {
+            font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            animation: pulse 2s infinite;
+            color: #1877f2;
+            letter-spacing: -0.5px;
         }
 
-        /* ເສັ້ນແບ່ງ */
-        .divider {
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0 auto 30px;
-            border-radius: 2px;
+        .navbar-left .logo span {
+            color: #1c1e21;
         }
 
-        /* ຂໍ້ຄວາມ */
-        p {
-            font-size: 1.3rem;
-            color: #2d3748;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            font-weight: 300;
+        .search-bar {
+            background: #f0f2f5;
+            border-radius: 24px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 8px;
         }
 
-        /* ປຸ່ມເພີ່ມຄວາມສວຍ */
-        .btn {
-            display: inline-block;
-            padding: 14px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
+        .search-bar input {
             border: none;
-            border-radius: 50px;
+            background: transparent;
+            outline: none;
+            font-size: 0.9rem;
+            width: 180px;
+            color: #1c1e21;
+        }
+
+        .search-bar input::placeholder {
+            color: #65676b;
+        }
+
+        .navbar-center {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .nav-icon {
+            padding: 8px 32px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-            text-decoration: none;
-            letter-spacing: 0.5px;
+            color: #65676b;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+        .nav-icon:hover {
+            background: #f0f2f5;
         }
 
-        .btn:active {
-            transform: scale(0.95);
+        .nav-icon.active {
+            color: #1877f2;
+            border-bottom: 3px solid #1877f2;
+            border-radius: 0;
         }
 
-        /* ໄອຄອນຫຼືອີໂມຈິ */
-        .emoji {
+        .nav-icon .badge {
+            position: absolute;
+            top: 2px;
+            right: 20px;
+            background: #e41e3f;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 50%;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-right .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .navbar-right .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #1c1e21;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .navbar-right .icon-btn:hover {
+            background: #e4e6eb;
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto 0;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 20px;
+        }
+
+        /* ===== LEFT SIDEBAR ===== */
+        .left-sidebar {
+            position: sticky;
+            top: 76px;
+            height: fit-content;
+        }
+
+        .left-sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1c1e21;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .left-sidebar .menu-item:hover {
+            background: #f0f2f5;
+        }
+
+        .left-sidebar .menu-item .icon {
+            font-size: 1.4rem;
+            width: 32px;
+            text-align: center;
+        }
+
+        .left-sidebar .menu-item .icon img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .left-sidebar .divider {
+            border-top: 1px solid #d0d7de;
+            margin: 8px 0;
+        }
+
+        .left-sidebar .shortcut-label {
+            font-size: 0.85rem;
+            color: #65676b;
+            font-weight: 600;
+            padding: 8px 12px;
+        }
+
+        /* ===== MAIN FEED ===== */
+        .main-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Story Section */
+        .story-section {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0 8px;
+            scrollbar-width: none;
+        }
+
+        .story-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-card {
+            min-width: 110px;
+            height: 180px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 12px;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .story-card:hover {
+            transform: scale(1.03);
+        }
+
+        .story-card .story-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 3px solid #1877f2;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1c1e21;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+
+        .story-card .story-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .story-card.story2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .story-card.story3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .story-card.story4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .story-card.story5 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .story-card .add-story {
+            font-size: 2rem;
+            background: #1877f2;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fff;
+            margin-bottom: 4px;
+        }
+
+        /* Post Composer */
+        .post-composer {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .post-composer .composer-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .post-composer .composer-top .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .post-composer .composer-top input {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 24px;
+            background: #f0f2f5;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .post-composer .composer-top input:hover {
+            background: #e4e6eb;
+        }
+
+        .post-composer .composer-divider {
+            border-top: 1px solid #d0d7de;
+            margin: 12px 0;
+        }
+
+        .post-composer .composer-actions {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .post-composer .composer-actions .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #65676b;
+            transition: 0.2s;
+        }
+
+        .post-composer .composer-actions .action-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .post-composer .composer-actions .action-btn .icon {
+            font-size: 1.3rem;
+        }
+
+        /* Post Card */
+        .post-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .post-card .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .post-card .post-header .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .post-card .post-header .post-user {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .post-card .post-header .post-time {
+            font-size: 0.75rem;
+            color: #65676b;
+        }
+
+        .post-card .post-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .post-card .post-image {
+            width: 100%;
+            height: 280px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 3rem;
-            display: block;
-            margin-bottom: 10px;
+            color: #fff;
         }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        .post-card .post-image.img2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .post-card .post-image.img3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .post-card .post-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #d0d7de;
+            font-size: 0.85rem;
+            color: #65676b;
+        }
+
+        .post-card .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0;
+        }
+
+        .post-card .post-actions .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #65676b;
+            transition: 0.2s;
+        }
+
+        .post-card .post-actions .action-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .post-card .post-actions .action-btn.liked {
+            color: #1877f2;
+        }
+
+        /* ===== RIGHT SIDEBAR ===== */
+        .right-sidebar {
+            position: sticky;
+            top: 76px;
+            height: fit-content;
+        }
+
+        .right-sidebar .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #65676b;
+            padding: 8px 0;
+        }
+
+        .right-sidebar .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .right-sidebar .friend-item:hover {
+            background: #f0f2f5;
+        }
+
+        .right-sidebar .friend-item .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+
+        .right-sidebar .friend-item .name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .right-sidebar .friend-item .status {
+            font-size: 0.7rem;
+            color: #31a24c;
+        }
+
+        .right-sidebar .sponsored {
+            margin-top: 16px;
+        }
+
+        .right-sidebar .sponsored .ad-item {
+            display: flex;
+            gap: 12px;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .right-sidebar .sponsored .ad-item .ad-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-shrink: 0;
+        }
+
+        .right-sidebar .sponsored .ad-item .ad-text {
+            font-size: 0.85rem;
+            color: #1c1e21;
+        }
+
+        .right-sidebar .sponsored .ad-item .ad-text .ad-label {
+            font-size: 0.7rem;
+            color: #65676b;
+        }
+
+        /* ===== COLOR AVATARS ===== */
+        .avatar-c1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .avatar-c2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .avatar-c3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .avatar-c4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .avatar-c5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .avatar-c6 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+        .avatar-c7 { background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%); }
+        .avatar-c8 { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .right-sidebar {
+                display: none;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .main-container {
+                grid-template-columns: 240px 1fr;
             }
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
+        @media (max-width: 768px) {
+            .left-sidebar {
+                display: none;
             }
-            50% {
-                opacity: 0.8;
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 0 8px;
             }
-        }
-
-        /* ຕອບສະໜອງກັບຈໍມືຖື */
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 30px;
+            .navbar-center .nav-icon {
+                padding: 8px 16px;
+                font-size: 1.2rem;
             }
-
-            h1 {
-                font-size: 2.8rem;
+            .search-bar input {
+                width: 100px;
             }
-
-            p {
-                font-size: 1.1rem;
-            }
-
-            .btn {
-                padding: 12px 30px;
+            .navbar-right .icon-btn {
+                width: 32px;
+                height: 32px;
                 font-size: 0.9rem;
+            }
+            .story-card {
+                min-width: 80px;
+                height: 140px;
+            }
+            .post-card .post-image {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-left .logo {
+                font-size: 1.3rem;
+            }
+            .search-bar {
+                display: none;
+            }
+            .navbar-center .nav-icon {
+                padding: 8px 10px;
+                font-size: 1rem;
+            }
+            .navbar-right .icon-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- ເພີ່ມອີໂມຈິເພື່ອຄວາມສວຍ -->
-        <span class="emoji">🚀</span>
-        <h1>Hello, World!</h1>
-        <div class="divider"></div>
-        <p>
-            ຍິນດີຕ້ອນຮັບສູ່ໂລກແຫ່ງການອອກແບບເວັບ 
-            <br>
-            <span style="font-weight: 500; color: #667eea;">This is a simple paragraph.</span>
-        </p>
-        <!-- ປຸ່ມທີ່ເຮັດວຽກຈິງ -->
-        <button class="btn" onclick="alert('ສະບາຍດີ! ເຈົ້າໄດ້ກົດປຸ່ມແລ້ວ 🙌')">
-            ກົດທີ່ນີ້
-        </button>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="logo">f<span>acebook</span></div>
+            <div class="search-bar">
+                <span>🔍</span>
+                <input type="text" placeholder="ຄົ້ນຫາເຟສບຸກ">
+            </div>
+        </div>
+
+        <div class="navbar-center">
+            <div class="nav-icon active" title="ໜ້າຫຼັກ">🏠</div>
+            <div class="nav-icon" title="ເບິ່ງ">📺</div>
+            <div class="nav-icon" title="ຮ້ານ">🛒</div>
+            <div class="nav-icon" title="ກຸ່ມ">👥</div>
+            <div class="nav-icon" title="ແອັບ">📱</div>
+        </div>
+
+        <div class="navbar-right">
+            <button class="icon-btn" title="ເມນູ">☰</button>
+            <button class="icon-btn" title="ຂໍ້ຄວາມ">💬</button>
+            <button class="icon-btn" title="ແຈ້ງການ">🔔</button>
+            <div class="avatar" title="ໂປຣໄຟລ໌">ທ</div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-container">
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <aside class="left-sidebar">
+            <div class="menu-item">
+                <span class="icon">👤</span>
+                ທ່ານ ສົມຈິດ
+            </div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                ໝູ່ເພື່ອນ
+            </div>
+            <div class="menu-item">
+                <span class="icon">🕒</span>
+                ຄວາມຊົງຈຳ
+            </div>
+            <div class="menu-item">
+                <span class="icon">📺</span>
+                ເບິ່ງ
+            </div>
+            <div class="menu-item">
+                <span class="icon">🛒</span>
+                ຮ້ານ
+            </div>
+            <div class="menu-item">
+                <span class="icon">👥</span>
+                ກຸ່ມ
+            </div>
+            <div class="divider"></div>
+            <div class="shortcut-label">ທາງລັດຂອງເຈົ້າ</div>
+            <div class="menu-item">
+                <span class="icon">📱</span>
+                ແອັບພລິເຄຊັນ
+            </div>
+            <div class="menu-item">
+                <span class="icon">💬</span>
+                ຂໍ້ຄວາມ
+            </div>
+            <div class="menu-item">
+                <span class="icon">🔔</span>
+                ແຈ້ງການ
+            </div>
+        </aside>
+
+        <!-- ===== MAIN FEED ===== -->
+        <main class="main-feed">
+
+            <!-- Story Section -->
+            <div class="story-section">
+                <div class="story-card" style="background: #fff; color: #1c1e21; border: 1px solid #d0d7de;">
+                    <div class="add-story">+</div>
+                    <div class="story-name" style="color: #1c1e21;">ສ້າງສະຕໍຣີ</div>
+                </div>
+                <div class="story-card">
+                    <div class="story-avatar">ສ</div>
+                    <div class="story-name">ສີວິໄລ</div>
+                </div>
+                <div class="story-card story2">
+                    <div class="story-avatar">ບ</div>
+                    <div class="story-name">ບຸນມີ</div>
+                </div>
+                <div class="story-card story3">
+                    <div class="story-avatar">ພ</div>
+                    <div class="story-name">ພອນສະຫວັນ</div>
+                </div>
+                <div class="story-card story4">
+                    <div class="story-avatar">ມ</div>
+                    <div class="story-name">ມະໂນພອນ</div>
+                </div>
+                <div class="story-card story5">
+                    <div class="story-avatar">ຄ</div>
+                    <div class="story-name">ຄຳພັນ</div>
+                </div>
+            </div>
+
+            <!-- Post Composer -->
+            <div class="post-composer">
+                <div class="composer-top">
+                    <div class="avatar">ທ</div>
+                    <input type="text" placeholder="ທ່ານກຳລັງຄິດຫຍັງຢູ່?">
+                </div>
+                <div class="composer-divider"></div>
+                <div class="composer-actions">
+                    <button class="action-btn" onclick="createPost()">
+                        <span class="icon">📹</span> ວິດີໂອສົດ
+                    </button>
+                    <button class="action-btn" onclick="createPost()">
+                        <span class="icon">🖼️</span> ຮູບ/ວິດີໂອ
+                    </button>
+                    <button class="action-btn" onclick="createPost()">
+                        <span class="icon">😊</span> ຄວາມຮູ້ສຶກ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Post 1 -->
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar avatar-c1">ສ</div>
+                    <div>
+                        <div class="post-user">ສີວິໄລ</div>
+                        <div class="post-time">2 ຊົ່ວໂມງກ່ອນ · 🌍</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    ສະບາຍດີທຸກຄົນ! ມື້ນີ້ອາກາດດີຫຼາຍ ເໝາະແກ່ການທ່ອງທ່ຽວ ແລະ ຖ່າຍຮູບວິວທຳມະຊາດ 🌿🌄
+                </div>
+                <div class="post-image">🌄 ພາບທຳມະຊາດ</div>
+                <div class="post-stats">
+                    <span>❤️ 42 ຄົນ</span>
+                    <span>💬 8 ຄຳເຫັນ · 🔄 3 ການແບ່ງປັນ</span>
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="likePost(this)">❤️ ຊື່ນຊອບ</button>
+                    <button class="action-btn" onclick="alert('💬 ເປີດໜ້າຄຳເຫັນ')">💬 ຄຳເຫັນ</button>
+                    <button class="action-btn" onclick="alert('🔄 ແບ່ງປັນໂພສນີ້')">🔄 ແບ່ງປັນ</button>
+                </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar avatar-c2">ບ</div>
+                    <div>
+                        <div class="post-user">ບຸນມີ</div>
+                        <div class="post-time">5 ຊົ່ວໂມງກ່ອນ · 📍 ວຽງຈັນ</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    ມາເຮັດວຽກກັນເດີ! ທີມງານຂອງພວກເຮົາກຳລັງຊອກຫາສະມາຊິກໃໝ່ ສົນໃຈຕິດຕໍ່ມາໄດ້ເລີຍ 💼✨
+                </div>
+                <div class="post-image img2">💼 ວຽກງານ ແລະ ໂອກາດ</div>
+                <div class="post-stats">
+                    <span>❤️ 28 ຄົນ</span>
+                    <span>💬 12 ຄຳເຫັນ · 🔄 5 ການແບ່ງປັນ</span>
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="likePost(this)">❤️ ຊື່ນຊອບ</button>
+                    <button class="action-btn" onclick="alert('💬 ເປີດໜ້າຄຳເຫັນ')">💬 ຄຳເຫັນ</button>
+                    <button class="action-btn" onclick="alert('🔄 ແບ່ງປັນໂພສນີ້')">🔄 ແບ່ງປັນ</button>
+                </div>
+            </div>
+
+            <!-- Post 3 -->
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar avatar-c3">ພ</div>
+                    <div>
+                        <div class="post-user">ພອນສະຫວັນ</div>
+                        <div class="post-time">1 ມື້ກ່ອນ · 📸 ຫຼວງພະບາງ</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    ຄວາມງາມຂອງຫຼວງພະບາງ ໃນຍາມຕາເວັນຕົກດິນ ສີສັນທີ່ສວຍງາມ ຈົບງາມຫຼາຍ 🌅✨
+                </div>
+                <div class="post-image img3">🌅 ຕາເວັນຕົກດິນ ຫຼວງພະບາງ</div>
+                <div class="post-stats">
+                    <span>❤️ 67 ຄົນ</span>
+                    <span>💬 15 ຄຳເຫັນ · 🔄 9 ການແບ່ງປັນ</span>
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="likePost(this)">❤️ ຊື່ນຊອບ</button>
+                    <button class="action-btn" onclick="alert('💬 ເປີດໜ້າຄຳເຫັນ')">💬 ຄຳເຫັນ</button>
+                    <button class="action-btn" onclick="alert('🔄 ແບ່ງປັນໂພສນີ້')">🔄 ແບ່ງປັນ</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- ===== RIGHT SIDEBAR ===== -->
+        <aside class="right-sidebar">
+            <div class="section-title">ຜູ້ຕິດຕໍ່</div>
+            <div class="friend-item">
+                <div class="avatar avatar-c4">ມ</div>
+                <div>
+                    <div class="name">ມະໂນພອນ</div>
+                    <div class="status">● ອອນລາຍ</div>
+                </div>
+            </div>
+            <div class="friend-item">
+                <div class="avatar avatar-c5">ຄ</div>
+                <div>
+                    <div class="name">ຄຳພັນ</div>
+                    <div class="status">● ອອນລາຍ</div>
+                </div>
+            </div>
+            <div class="friend-item">
+                <div class="avatar avatar-c6">ວ</div>
+                <div>
+                    <div class="name">ວິໄລພອນ</div>
+                    <div class="status" style="color: #65676b;">ຫວ່າງ</div>
+                </div>
+            </div>
+            <div class="friend-item">
+                <div class="avatar avatar-c7">ຈ</div>
+                <div>
+                    <div class="name">ຈັນທະວີ</div>
+                    <div class="status" style="color: #65676b;">ຫວ່າງ</div>
+                </div>
+            </div>
+
+            <div class="sponsored">
+                <div class="section-title">ສະປອນເຊີ</div>
+                <div class="ad-item">
+                    <div class="ad-img">🏨</div>
+                    <div class="ad-text">
+                        <div class="ad-label">ໂຮງແຮມ ຈອງ24h</div>
+                        ຈອງທີ່ພັກລາຄາພິເສດ ສ່ວນລດ 40%
+                    </div>
+                </div>
+                <div class="ad-item">
+                    <div class="ad-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">✈️</div>
+                    <div class="ad-text">
+                        <div class="ad-label">ສາຍການບິນ ລາວ</div>
+                        ຖ້ຽວບິນພາຍໃນ ລາຄາເລີ່ມຕົ້ນ 500,000 ກີບ
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== LIKE POST =====
+        function likePost(btn) {
+            if (btn.classList.contains('liked')) {
+                btn.classList.remove('liked');
+                btn.innerHTML = '❤️ ຊື່ນຊອບ';
+                alert('👎 ທ່ານໄດ້ຍົກເລີກການຊື່ນຊອບແລ້ວ');
+            } else {
+                btn.classList.add('liked');
+                btn.innerHTML = '❤️ ຊື່ນຊອບແລ້ວ';
+                alert('👍 ທ່ານໄດ້ຊື່ນຊອບໂພສນີ້ແລ້ວ!');
+            }
+        }
+
+        // ===== CREATE POST (ຈຳລອງ) =====
+        function createPost() {
+            alert('📝 ກຳລັງເປີດໜ້າສ້າງໂພສ...\n(ສາມາດເພີ່ມຮູບ, ວິດີໂອ, ຫຼື ສະຖານະ)');
+        }
+
+        // ===== SEARCH FUNCTION =====
+        document.querySelector('.search-bar input')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    alert(`🔍 ກຳລັງຄົ້ນຫາ "${query}" ...\n(ສະແດງຜົນລັບຈຳລອງ)`);
+                }
+            }
+        });
+
+        // ===== NAV ICON CLICK =====
+        document.querySelectorAll('.nav-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                document.querySelectorAll('.nav-icon').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                const label = this.getAttribute('title') || 'ໜ້າ';
+                alert(`📱 ທ່ານໄດ້ກົດ "${label}"`);
+            });
+        });
+
+        // ===== MENU ITEM CLICK =====
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const text = this.textContent.trim();
+                alert(`📌 ທ່ານໄດ້ກົດ "${text}"`);
+            });
+        });
+
+        // ===== STORY CLICK =====
+        document.querySelectorAll('.story-card').forEach(story => {
+            story.addEventListener('click', function() {
+                const name = this.querySelector('.story-name')?.textContent || 'ສະຕໍຣີ';
+                alert(`📸 ກຳລັງເບິ່ງສະຕໍຣີຂອງ "${name}"`);
+            });
+        });
+
+        // ===== FRIEND ITEM CLICK =====
+        document.querySelectorAll('.friend-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const name = this.querySelector('.name')?.textContent || 'ໝູ່';
+                alert(`👤 ໄປທີ່ໂປຣໄຟລ໌ຂອງ "${name}"`);
+            });
+        });
+
+        // ===== AD ITEM CLICK =====
+        document.querySelectorAll('.ad-item').forEach(ad => {
+            ad.addEventListener('click', function() {
+                alert('📢 ກຳລັງເປີດໜ້າໂຄສະນາ...');
+            });
+        });
+
+        // ===== COMPOSER CLICK =====
+        document.querySelector('.composer-top input')?.addEventListener('click', function() {
+            alert('📝 ກຳລັງສ້າງໂພສໃໝ່...');
+        });
+
+        console.log('✅ ເຟສບຸກຈຳລອງ ພ້ອມໃຊ້ງານແລ້ວ!');
+    </script>
+
 </body>
 </html>
